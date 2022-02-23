@@ -1,10 +1,10 @@
-<form  class="form-inline">
+<form  *ngIf="hideList" class="form-inline">
   <div class="form-group">
       <input class="form-control mr-sm-2" type="search" placeholder="Enter Name" aria-label="Search" (input)="search($event.target.value)">
       <button class="btn my-2 my-sm-0" type="submit">Search</button>
   </div>
 </form>
-<div class="row mt-3">
+<div *ngIf="hideList" class="row mt-3">
   <div class="col-md-12">
       <div class="tableStyle">
           <table class="table table-hover">
@@ -19,9 +19,9 @@
               <tbody>
                 
                   <tr *ngFor="let item of member_list; let i=index" >
-                      <!-- <td>{{item.name}}</td> -->
-                      <input  type="text" [value]="item.name" >
-                      <button (click)="edit(item.name)"> Save</button>
+                      <td>{{item.name}}</td>
+                      <!-- <input disabled type="text" [value]="item.name" > -->
+                      <button (click)="edit(item.name)"> Edit</button>
                       
                   </tr>
                   <!-- <tr>
@@ -34,3 +34,17 @@
       </div>
   </div>
 </div>
+<form  [formGroup]="editName" *ngIf="hideEdit" >
+    <div class="form-group">
+        <input formControlName="name" type="text" placeholder="Enter Name" >
+        <button (click)="save()">Save</button>
+        <!-- < -->
+    </div>
+  </form>
+
+  <div *ngIf="showUpdatedName">
+      <h2>Update Name    </h2> {{this.updatedName}}
+      <!-- {{this.updatedName}} -->
+      
+  </div>
+  <button *ngIf="showUpdatedName" (click)="List()">Go to List</button>
